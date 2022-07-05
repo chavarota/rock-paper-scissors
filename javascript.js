@@ -1,5 +1,5 @@
-humanScore = 0;
-machineScore = 0;
+var humanScore = 0;
+var machineScore = 0;
 
 function computerPlay() {
     var possibleReturn = [
@@ -51,23 +51,37 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-function game() {
-    humanScore = 0;
-    machineScore = 0;
+function startGame(e) {
+    verbalPrompt.innerHTML = game(e);
+    scoreResult.innerHTML = humanScore.toString() + " - " + machineScore.toString();
+};
 
-    for (let i = 0; i < 5; i++) {
-        console.log(playRound(prompt("make your move!"), computerPlay()));
-    }
+const rockButton = document.getElementById("r");
+const paperButton = document.getElementById("p");
+const scissorsButton = document.getElementById("s");
 
-    if (humanScore > machineScore) {
-        return "You win, with a score of " + humanScore + " - " + machineScore;
-    }
-    else if (machineScore > humanScore) {
-        return "You lose, with a score of " + humanScore + " - " + machineScore;
-    }
-    else {
-        return "Draw, with a score of " + humanScore + " - " + machineScore;
+rockButton.addEventListener("click", function () { startGame('rock') });
+paperButton.addEventListener("click", function () { startGame('paper') });
+scissorsButton.addEventListener("click", function () { startGame('scissors') });
+
+const verbalPrompt = document.getElementById('verbal');
+const scoreResult = document.getElementById('count');
+
+function game(e) {
+
+    const result = playRound(e, computerPlay());
+
+    if (humanScore > 4 || machineScore > 4) {
+        if (humanScore > machineScore) {
+            return "You win, with a score of " + humanScore + " - " + machineScore;
+        }
+        else if (machineScore > humanScore) {
+            return "You lose, with a score of " + humanScore + " - " + machineScore;
+        }
+        else {
+            return "Draw, with a score of " + humanScore + " - " + machineScore;
+        }
+    } else {
+        return result
     }
 }
-
-console.log(game())
